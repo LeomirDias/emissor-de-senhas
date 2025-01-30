@@ -94,22 +94,5 @@ server.listen(port, "0.0.0.0", () => {
     console.log(`Servidor WebSocket rodando na mesma porta ${port}`);
 });
 
-// Função para entrar no modo de tela cheia
-function entrarTelaCheia() {
-    var elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { // Firefox
-        elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { // IE/Edge
-        elem.msRequestFullscreen();
-    }
-}
-
-// Adicionando evento ao botão para ativar o modo de tela cheia
-document.getElementById("fullscreen-btn").addEventListener("click", entrarTelaCheia);
-
 // Exibindo o ano atual no footer
 document.getElementById("year").textContent = new Date().getFullYear();
