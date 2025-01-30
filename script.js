@@ -5,7 +5,7 @@ const http = require("http");
 const WebSocket = require("ws");
 const cors = require("cors");
 const os = require("os");
-const queueRoutes = require("./routes/queueRoutes");
+const fetch = require("node-fetch"); // Importando o fetch
 
 const app = express();
 const port = process.env.PORT || 3001; // Define a porta que a API rodará
@@ -18,7 +18,7 @@ const localIP = Object.values(os.networkInterfaces())
 // Lista de origens permitidas
 const allowedOrigins = new Set([
     "http://localhost:3000",
-    "http://10.0.1.16",
+    "http://10.0.1.16", // IP da VM primária
     "http://172.16.200.66" // IP da VM secundária
 ]);
 
@@ -64,9 +64,9 @@ wss.on("connection", (ws) => {
         let url = "";
 
         if (message === "add-general") {
-            url = `http://${localIP}:3001/api/add-general`;
+            url = `http://10.0.1.16:3001/api/add-general`; // Conexão com a aplicação primária
         } else if (message === "add-preferential") {
-            url = `http://${localIP}:3001/api/add-preferential`;
+            url = `http://10.0.1.16:3001/api/add-preferential`; // Conexão com a aplicação primária
         }
 
         if (url) {
