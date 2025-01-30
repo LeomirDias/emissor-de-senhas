@@ -1,24 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Senhas</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Painel de Senhas</title>
 </head>
-
 <body>
-    <div class="container">
-        <img src="./assets/logoReis.svg" alt="Logo-Reis" id="logo">
-        <h1 id="call-to-action">Retire sua senha aqui!</h1>
-        <button id="add-preferential" class="btn"> Senha Preferencial</button>
-        <button id="add-general" class="btn"> Senha Comum</button>
-    </div>
-    <footer>
-        <span>&copy; <span id="year"></span> Supermercados Reis. Todos os direitos reservados.</span>
-    </footer>
-    <script src="./script.js"></script>
-</body>
+    <h1>Painel de Senhas</h1>
+    <button id="addPreferentialButton">Adicionar Senha Preferencial</button>
+    <button id="addGeneralButton">Adicionar Senha Geral</button>
 
+    <script>
+        // Configuração do WebSocket
+        const socket = new WebSocket("ws://10.0.1.16:3001");  // Endereço da API primária
+
+        socket.onopen = function() {
+            console.log("Conectado ao WebSocket");
+        };
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log("Mensagem recebida via WebSocket:", data);
+        };
+
+        // Função para enviar informações para a API primária via WebSocket
+        function sendMessageToPrimaryApp(message) {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(message));
+                console.log("Mensagem enviada para a aplicação primária:", message);
+            } else {
+                console.error("WebSocket não está aberto.");
+            }
+        }
+
+        // Evento para o botão de adicionar senha preferencial
+        document.getElementById("addPreferentialButton").addEventListener("click", function() {
+            const message = { type: "add-preferential" };  // Mensagem específica
+            sendMessageToPrimaryApp(message);
+        });
+
+        // Evento para o botão de adicionar senha geral
+        document.getElementById("addGeneralButton").addEventListener("click", function() {
+            const message = { type: "add-general" };  // Mensagem específica
+            sendMessageToPrimaryApp(message);
+        });
+    </script>
+</body>
 </html>
