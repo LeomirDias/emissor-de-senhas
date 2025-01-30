@@ -1,3 +1,16 @@
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const port = 8080;
+
+app.use(cors());  // Habilita CORS para todas as origens
+
+app.use(express.static('public'));  // Serve seus arquivos estáticos
+
+app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+});
+
 // Função para adicionar senha geral
 function addGeneralPassword() {
     fetch('http://10.0.1.16:3001/api/add-general', {
