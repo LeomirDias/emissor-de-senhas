@@ -93,6 +93,3 @@ server.listen(port, "0.0.0.0", () => {
     console.log(`- Rede: http://${localIP}:${port}`);
     console.log(`Servidor WebSocket rodando na mesma porta ${port}`);
 });
-
-// Exibindo o ano atual no footer
-document.getElementById("year").textContent = new Date().getFullYear();
